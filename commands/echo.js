@@ -23,7 +23,6 @@ export default class Echo {
             await message.channel.send(res);
             return null;
         }
-        console.log(res)
         return res;
     }
 };
