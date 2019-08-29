@@ -9,6 +9,13 @@ import MarkovManager from "./dbman/markov.js";
 import MarkovCounterManager from "./dbman/markovcounter.js"
 import RecruitManager from "./dbman/recruit.js"
 
+import DBBackup from "./utils/dbbackup.js"
+
+import Api from "./api.js"
+
+import ReactionManager from "./reactionmanager.js"
+import ConnectionTime from "./connectiontime.js"
+
 import { fileURLToPath } from "url"
 import { dirname } from "path"
 
@@ -16,6 +23,7 @@ dotenv.config();
 
 const config = {
     CLIENT_TOKEN: process.env.CLIENT_TOKEN,
+    CLIENT_ID: process.env.CLIENT_ID,
     ROOT: dirname(fileURLToPath(import.meta.url))
 };
 
@@ -28,11 +36,21 @@ const client = new discord.Client();
 client.login(config.CLIENT_TOKEN);
 
 client.on("ready", async () => {
+    DBBackup.initialize();
+    // setInterval(_ => {
+    //     DBBackup.backup();
+    // }, 60000);
+
     await ConnectionDataManager.initialize(config);
     await ConnectionTimeManager.initialize(config);
     await MarkovManager.initialize(config);
     await MarkovCounterManager.initialize(config);
     await RecruitManager.initialize(config);
+
+    await ReactionManager.registerEvents(client, config);
+    await ConnectionTime.init(client);
+
+    await Api.init(client);
 
     await fs.readdirSync("./commands", {withFileTypes: true}).forEach(async file => {if (!file.isDirectory()) await definedcommands.push(new (await import(`./commands/${file.name}`)).default(config, client))});
 });
@@ -56,10 +74,10 @@ client.on("message", async message => {
             commands[commands.length - 1].pipe = true;
         }
     }
-    commands.forEach(command => {
-        definedcommands.forEach(defcmd => {
+    commands.forEach(async command => {
+        definedcommands.forEach(async defcmd => {
             if (defcmd.command === command[0]) {
-                prev = defcmd.exec(message, command, prev);
+                prev = await defcmd.exec(message, command, prev);
             }
         });
     });

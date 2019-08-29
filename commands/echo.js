@@ -7,10 +7,12 @@ export default class Echo {
         this.log = new Log();
 
         this.command = "echo";
+        this.description = `echo command.`;
+        this.help = `usage: echo [string]...`;
         
         this.log.info("echo command loaded.");
     }
-    exec (message, command, prev) {
+    async exec (message, command, prev) {
         if (prev) {
             command = [null, ...prev.split(/ |,/g)];
         }

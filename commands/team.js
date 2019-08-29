@@ -7,10 +7,12 @@ export default class Team {
         this.log = new Log();
 
         this.command = "team";
+        this.description = `team command.`;
+        this.help = `usage: team [name: string]...`;
         
         this.log.info("team command loaded.");
     }
-    exec (message, command, prev) {
+    async exec (message, command, prev) {
         if (prev) {
             command = [null, ...prev.split(/ |,/g)];
         }

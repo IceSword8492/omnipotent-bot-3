@@ -25,12 +25,12 @@ export default class Log {
     }
     warn (message) {
         if (this.config.output.LEVEL <= this.config.output.const.WARN) {
-            console.info(`[${this.date.timeStr}] [${author || "Server"}/WARN]: ${message}`);
+            console.warn(`[${this.date.timeStr}] [${author || "Server"}/WARN]: ${message}`);
         }
     }
     error (message) {
         if (this.config.output.LEVEL <= this.config.output.const.ERROR) {
-            console.info(`[${this.date.timeStr}] [${author || "Server"}/ERROR]: ${message}`);
+            console.error(`[${this.date.timeStr}] [${author || "Server"}/ERROR]: ${message}`);
         }
     }
 };
