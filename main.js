@@ -56,6 +56,8 @@ client.on("ready", async () => {
     await Api.init(client);
 
     await fs.readdirSync("./commands", {withFileTypes: true}).forEach(async file => {if (!file.isDirectory()) await definedcommands.push(new (await import(`./commands/${file.name}`)).default(config, client))});
+
+    setInterval(() => {request({url: "https://api.twitch.tv/kraken/streams/rainbow6jp?client_id=gmteu2zswb8px05m0lggbajsihqiey", method: "GET", json: true}, (err, res, body) => {if (body?.stream){client.user.setActivity(/*live title*/ body?.stream?.channel?.status, {type: "STREAMING",url: "https://twitch.tv/rainbow6jp"});}else{client.user.setActivity("", {});}});}, 60000);
 });
 
 client.on("message", async message => {
