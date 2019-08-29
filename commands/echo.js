@@ -20,9 +20,10 @@ export default class Echo {
         let res = command.filter((w, i) => i).join(" ");
         
         if (!command.pipe) {
-            message.channel.send(res);
+            await message.channel.send(res);
             return null;
         }
+        console.log(res)
         return res;
     }
 };

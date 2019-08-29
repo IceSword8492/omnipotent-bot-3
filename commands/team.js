@@ -30,7 +30,7 @@ export default class Team {
         let res = `blue: ${teams[0].join(" ")}\norange: ${teams[1].join(" ")}`;
 
         if (!command.pipe) {
-            message.channel.send(res);
+            await message.channel.send(res);
             return null;
         }
         return res;

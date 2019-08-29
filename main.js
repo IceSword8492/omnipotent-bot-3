@@ -59,7 +59,7 @@ client.on("ready", async () => {
 
     await fs.readdirSync("./commands", {withFileTypes: true}).forEach(async file => {if (!file.isDirectory()) await definedcommands.push(new (await import(`./commands/${file.name}`)).default(config, client))});
 
-    try { setInterval(() => {request({url: "https://api.twitch.tv/kraken/streams/rainbow6jp?client_id=gmteu2zswb8px05m0lggbajsihqiey", method: "GET", json: true}, (err, res, body) => {if (body.stream){client.user.setActivity(/*live title*/ body.stream.channel.status, {type: "STREAMING",url: "https://twitch.tv/rainbow6jp"});}else{client.user.setActivity("", {});}});}, 60000); } catch {}
+    try { setInterval(() => {request({url: "https://api.twitch.tv/kraken/streams/rainbow6jp?client_id=gmteu2zswb8px05m0lggbajsihqiey", method: "GET", json: true}).then(body => {if (body.stream){client.user.setActivity(/*live title*/ body.stream.channel.status, {type: "STREAMING",url: "https://twitch.tv/rainbow6jp"});}else{client.user.setActivity("", {});}});}, 60000); } catch {}
 });
 
 client.on("message", async message => {
@@ -81,11 +81,11 @@ client.on("message", async message => {
             commands[commands.length - 1].pipe = true;
         }
     }
-    commands.forEach(async command => {
-        definedcommands.forEach(async defcmd => {
+    for (let command of commands) {
+        for (let defcmd of definedcommands) {
             if (defcmd.command === command[0]) {
                 prev = await defcmd.exec(message, command, prev);
             }
-        });
-    });
+        }
+    }
 });

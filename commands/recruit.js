@@ -33,7 +33,7 @@ options:
         if (typeof count === "number" && !isNaN(count)) {
             res = (options.here ? "@here" : "") +
             (options.rank ? "<@&495293852647817217>" : "") +
-            " #募集 " + command[1] + "枠@" + count;
+            "" + command[1] + "枠@" + count;
             if (!command.pipe) {
                 let newMessage = await message.reply(res, {tts: options.tts});
                 await RecruitManager.create(newMessage.id, count);
