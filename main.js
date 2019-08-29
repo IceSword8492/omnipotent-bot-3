@@ -3,6 +3,8 @@ import fs from "fs"
 import discord from "discord.js"
 import Log from "./utils/log.js"
 
+import request from "request"
+
 import ConnectionDataManager from "./dbman/connectiondata.js"
 import ConnectionTimeManager from "./dbman/connectiontime.js"
 import MarkovManager from "./dbman/markov.js";
