@@ -1,0 +1,19 @@
+{
+  "name": "omnipotent-bot-3",
+  "version": "0.0.1",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "node --experimental-modules ./main.js"
+  },
+  "type": "module",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^11.5.1",
+    "dotenv": "^8.1.0",
+    "sqlite-async": "^1.0.12",
+    "sqlite3": "^4.1.0"
+  }
+}
