@@ -6,6 +6,9 @@ export default class Api {
     static async init (client) {
         let app = express();
         let listener = app.listen(process.env.PORT || 8080, _ => {});
+        app.get("/", async (req, res) => {
+            res.status(200).send();
+        });
         app.get("/api/v1/connection", async (req, res) => {
             let records = await ConnectionTimeManager.getList("*", {userid: ""}).catch(_ => null);
             let responseObject = {};
