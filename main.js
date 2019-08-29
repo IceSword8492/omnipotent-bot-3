@@ -24,7 +24,8 @@ dotenv.config();
 const config = {
     CLIENT_TOKEN: process.env.CLIENT_TOKEN,
     CLIENT_ID: process.env.CLIENT_ID,
-    ROOT: dirname(fileURLToPath(import.meta.url))
+    ROOT: dirname(fileURLToPath(import.meta.url)),
+    PROD: process.env.PROD === "PROD"
 };
 
 const log = new Log();
@@ -37,9 +38,11 @@ client.login(config.CLIENT_TOKEN);
 
 client.on("ready", async () => {
     DBBackup.initialize();
-    // setInterval(_ => {
-    //     DBBackup.backup();
-    // }, 60000);
+    if (config.PROD) {
+        setInterval(_ => {
+            DBBackup.backup();
+        }, 60000);
+    }
 
     await ConnectionDataManager.initialize(config);
     await ConnectionTimeManager.initialize(config);
