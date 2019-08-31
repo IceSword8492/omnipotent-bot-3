@@ -1,7 +1,7 @@
-import Log from "../utils/log.js";
-import RecruitManager from "../dbman/recruit.js";
+const Log = require("../utils/log.js");
+const RecruitManager = require("../dbman/recruit.js");
 
-export default class Recruit {
+module.exports = class Recruit {
     constructor (config, client, log) {
         this.config = config;
         this.client = client;

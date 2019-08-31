@@ -1,34 +1,35 @@
-import dotenv from "dotenv"
-import fs from "fs"
-import discord from "discord.js"
-import Log from "./utils/log.js"
+const dotenv = require("dotenv");
+const fs = require("fs");
+const discord = require("discord.js");
+const Log = require("./utils/log.js");
 
-import request from "request"
+const request = require("request-promise");
 
-import ConnectionDataManager from "./dbman/connectiondata.js"
-import ConnectionTimeManager from "./dbman/connectiontime.js"
-import MarkovManager from "./dbman/markov.js";
-import MarkovCounterManager from "./dbman/markovcounter.js"
-import RecruitManager from "./dbman/recruit.js"
+const ConnectionDataManager = require("./dbman/connectiondata.js");
+const ConnectionTimeManager = require("./dbman/connectiontime.js");
+const MarkovManager = require("./dbman/markov.js");
+const MarkovCounterManager = require("./dbman/markovcounter.js");
+const RecruitManager = require("./dbman/recruit.js");
 
-import Markov from "./markov/markov.js"
+const Markov = require("./markov/markov.js");
 
-import DBBackup from "./utils/dbbackup.js"
+const DBBackup = require("./utils/dbbackup.js");
 
-import Api from "./api.js"
+const Api = require("./api.js");
 
-import ReactionManager from "./reactionmanager.js"
-import ConnectionTime from "./connectiontime.js"
+const ReactionManager = require("./reactionmanager.js");
+const ConnectionTime = require("./connectiontime.js");
 
-import { fileURLToPath } from "url"
-import { dirname } from "path"
+// import { fileURLToPath } from "url"
+// import { dirname } from "path"
 
 dotenv.config();
 
 const config = {
     CLIENT_TOKEN: process.env.CLIENT_TOKEN,
     CLIENT_ID: process.env.CLIENT_ID,
-    ROOT: dirname(fileURLToPath(import.meta.url)),
+    // ROOT: dirname(fileURLToPath(import.meta.url)),
+    ROOT: __dirname,
     PROD: process.env.PROD === "PROD"
 };
 
@@ -59,7 +60,7 @@ client.on("ready", async () => {
 
     await Api.init(client);
 
-    await fs.readdirSync("./commands", {withFileTypes: true}).forEach(async file => {if (!file.isDirectory()) await definedcommands.push(new (await import(`./commands/${file.name}`)).default(config, client))});
+    await fs.readdirSync("./commands", {withFileTypes: true}).forEach(async file => {if (!file.isDirectory()) await definedcommands.push(new (require(`./commands/${file.name}`))(config, client))});
 
     try { setInterval(() => {request({url: "https://api.twitch.tv/kraken/streams/rainbow6jp?client_id=gmteu2zswb8px05m0lggbajsihqiey", method: "GET", json: true}).then(body => {if (body.stream){client.user.setActivity(/*live title*/ body.stream.channel.status, {type: "STREAMING",url: "https://twitch.tv/rainbow6jp"});}else{client.user.setActivity("", {});}});}, 60000); } catch {}
 });

@@ -1,6 +1,6 @@
-import RecruitManager from "./dbman/recruit.js";
+const RecruitManager = require("./dbman/recruit.js");
 
-export default class ReactionManager {
+module.exports = class ReactionManager {
     static async registerEvents (client, config) {
         await client.on("raw", async raw => {
             if (raw.t === "MESSAGE_REACTION_ADD") {

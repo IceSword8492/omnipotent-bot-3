@@ -1,6 +1,6 @@
-import DBMan from "../utils/dbman.js"
+const DBMan = require("../utils/dbman.js");
 
-export default class MarkovManager extends DBMan {
+module.exports = class MarkovManager extends DBMan {
     static tablename = "markovCounter";
 
     static async initialize (config) {

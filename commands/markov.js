@@ -1,7 +1,7 @@
-import Log from "../utils/log.js";
-import Markov from "../markov/markov.js"
+const Log = require("../utils/log.js");
+const Markov = require("../markov/markov.js");
 
-export default class MarkovCommand {
+module.exports = class MarkovCommand {
     constructor (config, client, log) {
         this.config = config;
         this.client = client;

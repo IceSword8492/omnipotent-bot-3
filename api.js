@@ -1,8 +1,11 @@
-import express from "express"
-import ConnectionTimeManager from "./dbman/connectiontime.js"
-import ConnectionDataManager from "./dbman/connectiondata.js"
+const express = require("express"
+);
+const ConnectionTimeManager = require("./dbman/connectiontime.js"
+);
+const ConnectionDataManager = require("./dbman/connectiondata.js"
+);
 
-export default class Api {
+module.exports = class Api {
     static async init (client) {
         let app = express();
         let listener = app.listen(process.env.PORT || 8080, _ => {});

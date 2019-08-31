@@ -1,6 +1,6 @@
-import Log from "../utils/log.js";
+const Log = require("../utils/log.js");
 
-export default class EchoCommand {
+module.exports = class EchoCommand {
     constructor (config, client, log) {
         this.config = config;
         this.client = client;

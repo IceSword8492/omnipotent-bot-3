@@ -1,7 +1,7 @@
-import sqlite from "sqlite-async"
-import Log from "./log.js"
+const sqlite = require("sqlite-async");
+const Log = require("./log.js");
 
-export default class DBMan {
+module.exports = class DBMan {
     static types = {
         null: "null",           // NULL値
         integer: "integer",     // 符号付整数

@@ -1,11 +1,11 @@
-import Log from "../utils/log.js"
-import TinySegmenter from "../utils/tinysegmenter.js"
-import MarkovManager from "../dbman/markov.js"
-import MarkovCounterManager from "../dbman/markovcounter.js"
+const Log = require("../utils/log.js");
+const TinySegmenter = require("../utils/tinysegmenter.js");
+const MarkovManager = require("../dbman/markov.js");
+const MarkovCounterManager = require("../dbman/markovcounter.js");
 
 const log = new Log();
 
-export default class Markov {
+module.exports = class Markov {
     static async update (message, newlimit, newpermission) {
         await MarkovCounterManager.create(message);
 

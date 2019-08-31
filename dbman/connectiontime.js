@@ -1,6 +1,7 @@
-import DBMan from "../utils/dbman.js"
+const DBMan = require("../utils/dbman.js"
+);
 
-export default class ConnectionTimeManager extends DBMan {
+module.exports = class ConnectionTimeManager extends DBMan {
     static tablename = "connectionTime";
     static columns = {userid: this.types.text, date: this.types.text, time: this.types.integer};
 

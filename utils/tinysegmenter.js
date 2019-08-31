@@ -175,4 +175,4 @@ TinySegmenter.prototype.segment = function(input) {
   return result;
 }
 
-export default TinySegmenter;
+module.exports = TinySegmenter;

@@ -1,9 +1,9 @@
-import dotenv from "dotenv"
-import DateUtil from "./date.js"
+const dotenv = require("dotenv");
+const DateUtil = require("./date.js");
 
 dotenv.config();
 
-export default class Log {
+module.exports = class Log {
     constructor () {
         this.config = {
             output: {

@@ -1,6 +1,6 @@
-import Log from "../utils/log.js"
+const Log = require("../utils/log.js");
 
-export default class Team {
+module.exports = class Team {
     constructor (config, client) {
         this.config = config;
         this.client = client;

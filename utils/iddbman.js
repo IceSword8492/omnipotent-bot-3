@@ -1,6 +1,6 @@
-import DBMan from "./dbman.js"
+const DBMan = require("./dbman.js");
 
-export default class IdDBMan extends DBMan {
+module.exports = class IdDBMan extends DBMan {
     static async initialize (config) {
         this.config = config;
 

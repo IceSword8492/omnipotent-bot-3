@@ -1,7 +1,9 @@
-import fs from "fs"
-import request from "request-promise"
+const fs = require("fs"
+);
+const request = require("request-promise"
+);
 
-export default class DBBackup {
+module.exports = class DBBackup {
     static async initialize () {
         let body = await request("https://online-storage.glitch.me/api/v1/users/sharo/buckets/omni3/database/main.db", {encoding: null}).catch(console.error);
         fs.writeFileSync("./database/main.db", body);

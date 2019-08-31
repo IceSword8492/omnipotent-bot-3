@@ -1,7 +1,9 @@
-import Log from "./utils/log.js"
-import ConnectionTimeManager from "./dbman/connectiontime.js"
+const Log = require("./utils/log.js"
+);
+const ConnectionTimeManager = require("./dbman/connectiontime.js"
+);
 
-export default class ConnectionTime {
+module.exports = class ConnectionTime {
     static gulid = null;
     static log = new Log();
 
