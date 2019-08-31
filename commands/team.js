@@ -10,7 +10,7 @@ export default class Team {
         this.description = `team command.`;
         this.help = `usage: team [name: string]...`;
         
-        this.log.info("team command loaded.");
+        this.log.info(`${this.command} command loaded.`);
     }
     async exec (message, command, prev) {
         if (prev) {

@@ -22,15 +22,18 @@ export default class Log {
         if (this.config.output.LEVEL <= this.config.output.const.INFO) {
             console.info(`[${this.date.timeStr}] [${author || "Server"}/INFO]: ${message}`);
         }
+        return `[${this.date.timeStr}] [${author || "Server"}/INFO]: ${message}`;
     }
     warn (message) {
         if (this.config.output.LEVEL <= this.config.output.const.WARN) {
             console.warn(`[${this.date.timeStr}] [${author || "Server"}/WARN]: ${message}`);
         }
+        return `[${this.date.timeStr}] [${author || "Server"}/WARN]: ${message}`;
     }
     error (message) {
         if (this.config.output.LEVEL <= this.config.output.const.ERROR) {
             console.error(`[${this.date.timeStr}] [${author || "Server"}/ERROR]: ${message}`);
         }
+        return `[${this.date.timeStr}] [${author || "Server"}/ERROR]: ${message}`;
     }
 };

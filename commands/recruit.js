@@ -15,7 +15,7 @@ options:
     --here, -h: here flag
     --rank, -r: rank flag`;
         
-        this.log.info("recruit command loaded.");
+        this.log.info(`${this.command} command loaded.`);
     }
     async exec (message, command, prev) {
         if (prev) {

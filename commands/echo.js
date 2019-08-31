@@ -1,6 +1,6 @@
 import Log from "../utils/log.js";
 
-export default class Echo {
+export default class EchoCommand {
     constructor (config, client, log) {
         this.config = config;
         this.client = client;
@@ -10,7 +10,7 @@ export default class Echo {
         this.description = `echo command.`;
         this.help = `usage: echo [string]...`;
         
-        this.log.info("echo command loaded.");
+        this.log.info(`${this.command} command loaded.`);
     }
     async exec (message, command, prev) {
         if (prev) {

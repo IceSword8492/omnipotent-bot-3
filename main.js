@@ -11,6 +11,8 @@ import MarkovManager from "./dbman/markov.js";
 import MarkovCounterManager from "./dbman/markovcounter.js"
 import RecruitManager from "./dbman/recruit.js"
 
+import Markov from "./markov/markov.js"
+
 import DBBackup from "./utils/dbbackup.js"
 
 import Api from "./api.js"
@@ -39,7 +41,7 @@ const client = new discord.Client();
 client.login(config.CLIENT_TOKEN);
 
 client.on("ready", async () => {
-    DBBackup.initialize();
+    await DBBackup.initialize();
     if (config.PROD) {
         setInterval(_ => {
             DBBackup.backup();
@@ -63,10 +65,15 @@ client.on("ready", async () => {
 });
 
 client.on("message", async message => {
+    if (message.author.id === config.CLIENT_ID) {
+        return;
+    }
     let prev = "";
     let pattern = /```(?<str>[\s\S]+)```|"(?<str2>([^\\"]|\\.)*)"|(?<str3>[^ |;]+)|(?<terminator>;)|(?<pipe>\|)/g;
     let matched = "";
     let commands = [[]];
+    let executed = false;
+
     while (matched = pattern.exec(message.content)) {
         if (matched.groups.str || matched.groups.str2 || matched.groups.str3) {
             if (commands[commands.length - 1].pipe !== undefined) {
@@ -84,8 +91,15 @@ client.on("message", async message => {
     for (let command of commands) {
         for (let defcmd of definedcommands) {
             if (defcmd.command === command[0]) {
+                executed = true;
                 prev = await defcmd.exec(message, command, prev);
             }
         }
+    }
+    if (!executed) {
+        if (await Markov.update(message)) {
+            await message.channel.send(await Markov.exec(message));
+        }
+        await Markov.register(message);
     }
 });
