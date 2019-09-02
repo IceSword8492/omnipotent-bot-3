@@ -113,6 +113,6 @@ module.exports = class Markov {
             }
         }
         signs.reverse();
-        return sentence + signes.join("");
+        return sentence + signs.join("");
     }
 }
