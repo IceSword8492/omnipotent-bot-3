@@ -82,7 +82,7 @@ module.exports = class Markov {
             } catch {}
         }
         let sentence = sentencearray.map(word => word[2]).join("");
-        let signes = [];
+        let signs = [];
         for (let i = 0; i < sentence.length - 1; i++) {
             switch (sentence.substring(i, i + 1))
             {
@@ -112,7 +112,7 @@ module.exports = class Markov {
                 break;
             }
         }
-        signes.reverse();
+        signs.reverse();
         return sentence + signes.join("");
     }
 }
