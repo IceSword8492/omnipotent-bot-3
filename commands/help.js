@@ -1,7 +1,8 @@
 const Log = require("../utils/log.js");
+const fs = require("fs");
 
 module.exports = class EchoCommand {
-    constructor (config, client, log) {
+    constructor (config, client, logflag) {
         this.config = config;
         this.client = client;
         this.log = new Log();
@@ -10,14 +11,41 @@ module.exports = class EchoCommand {
         this.description = `help command.`;
         this.help = `usage: help [command: string]`;
         
-        this.log.info(`${this.command} command loaded.`);
+        if (logflag) this.log.info(`${this.command} command loaded.`);
     }
     async exec (message, command, prev) {
         if (prev) {
             command = [null, ...prev.split(/ |,/g)];
         }
 
-        let res = command.filter((w, i) => i).join(" ");
+        let res = null;
+        let fileList = fs.readdirSync(this.config.ROOT + "/commands");
+        let commands = fileList.map(file => new (require("./" + file))(this.config, this.client, false));
+
+        if (command[1]) {
+            commands.forEach(cmd => {
+                if (cmd.command === command[1]) {
+                    res = {
+                        embed: {
+                            color: 0xff0000,
+                            fields: {
+
+                            }
+                        }
+                    };
+                }
+            });
+        } else {
+            res = {
+                embed: {
+                    color: 0xff0000,
+                    fields: commands.map(command => ({
+                        name: command.command,
+                        value: command.description
+                    }))
+                }
+            };
+        }
         
         if (!command.pipe) {
             await message.channel.send(res);

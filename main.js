@@ -60,9 +60,9 @@ client.on("ready", async () => {
 
     await Api.init(client);
 
-    await fs.readdirSync("./commands", {withFileTypes: true}).forEach(async file => {if (!file.isDirectory()) await definedcommands.push(new (require(`./commands/${file.name}`))(config, client))});
+    await fs.readdirSync("./commands", {withFileTypes: true}).forEach(async file => {if (!file.isDirectory()) await definedcommands.push(new (require(`./commands/${file.name}`))(config, client, true))});
 
-    try { setInterval(() => {request({url: "https://api.twitch.tv/kraken/streams/rainbow6jp?client_id=gmteu2zswb8px05m0lggbajsihqiey", method: "GET", json: true}).then(body => {if (body.stream){client.user.setActivity(/*live title*/ body.stream.channel.status, {type: "STREAMING",url: "https://twitch.tv/rainbow6jp"});}else{client.user.setActivity("", {});}});}, 60000); } catch {}
+    // try { setInterval(() => {request({url: "https://api.twitch.tv/kraken/streams/rainbow6jp?client_id=gmteu2zswb8px05m0lggbajsihqiey", method: "GET", json: true}).then(body => {if (body.stream){client.user.setActivity(/*live title*/ body.stream.channel.status, {type: "STREAMING",url: "https://twitch.tv/rainbow6jp"});}else{client.user.setActivity("", {});}});}, 60000); } catch {}
 });
 
 client.on("message", async message => {

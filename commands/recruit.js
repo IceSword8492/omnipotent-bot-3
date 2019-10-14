@@ -2,7 +2,7 @@ const Log = require("../utils/log.js");
 const RecruitManager = require("../dbman/recruit.js");
 
 module.exports = class Recruit {
-    constructor (config, client, log) {
+    constructor (config, client, logflag) {
         this.config = config;
         this.client = client;
         this.log = new Log();
@@ -15,7 +15,7 @@ options:
     --here, -h: here flag
     --rank, -r: rank flag`;
         
-        this.log.info(`${this.command} command loaded.`);
+        if (logflag) this.log.info(`${this.command} command loaded.`);
     }
     async exec (message, command, prev) {
         if (prev) {

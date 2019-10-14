@@ -2,7 +2,7 @@ const Log = require("../utils/log.js");
 const Markov = require("../markov/markov.js");
 
 module.exports = class MarkovCommand {
-    constructor (config, client, log) {
+    constructor (config, client, logflag) {
         this.config = config;
         this.client = client;
         this.log = new Log();
@@ -21,7 +21,7 @@ subcommands:
         usage: markov limit [limit: integer]
         description: set limit for channels.`;
         
-        this.log.info(`${this.command} command loaded.`);
+        if (logflag) this.log.info(`${this.command} command loaded.`);
     }
     async exec (message, command, prev) {
         if (prev) {
