@@ -20,7 +20,6 @@ module.exports = class ConnectionTime {
                 if (!record) {
                     await ConnectionTimeManager.create(member.id, date, 1);
                 }
-                console.log(member.id, member.user.username, member.nickname);
                 await ConnectionTimeManager.update(member.id, date, record ? record.time + 1 : 1); // todo ニックネーム更新
                 await ConnectionDataManager.update(member.nickname || member.user.username, member.id);
             });
