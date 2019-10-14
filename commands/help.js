@@ -18,19 +18,31 @@ module.exports = class EchoCommand {
             command = [null, ...prev.split(/ |,/g)];
         }
 
-        let res = null;
+        let res = {
+            embed: {
+                color: 0xff0000,
+                fields: [
+                    {
+                        name: "unknown",
+                        value: "requested command is unknown"
+                    }
+                ]
+            }
+        };;
         let fileList = fs.readdirSync(this.config.ROOT + "/commands");
         let commands = fileList.map(file => new (require("./" + file))(this.config, this.client, false));
-
         if (command[1]) {
             commands.forEach(cmd => {
                 if (cmd.command === command[1]) {
                     res = {
                         embed: {
                             color: 0xff0000,
-                            fields: {
-
-                            }
+                            fields: [
+                                {
+                                    name: cmd.command,
+                                    value: cmd.description + "\n" + cmd.help
+                                }
+                            ]
                         }
                     };
                 }
