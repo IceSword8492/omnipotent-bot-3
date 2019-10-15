@@ -31,7 +31,7 @@ module.exports = class JudgeCommand {
         }
 
         if (!command.pipe) {
-            await message.channel.send(res);
+            await message.channel.send(message.mentions.users.array()[0] + " >> *" + res + "*");
             return null;
         }
         return res;
