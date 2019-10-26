@@ -1,5 +1,8 @@
 const Log = require("../utils/log.js");
 const request = require("request-promise");
+const dotenv = require("dotenv");
+
+dotenv.config();
 
 module.exports = class NewsCommand {
     constructor (config, client, logflag) {
@@ -18,7 +21,7 @@ module.exports = class NewsCommand {
             command = [null, ...prev.split(/ |,/g)];
         }
 
-        let res = await request("https://api.hypixel.net/skyblock/news?key=c93ff0c3-2c42-4f89-93b9-9074ec9870f2");
+        let res = await request("https://api.hypixel.net/skyblock/news?key=" + process.env.HYPIXEL_KEY);
         
         if (!command.pipe) {
             await message.channel.send({

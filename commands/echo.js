@@ -22,7 +22,7 @@ module.exports = class EchoCommand {
         }
         
         if (!command.pipe) {
-            await message.channel.send(res);
+            await message.channel.send(res.substring(0, 1997) + "...");
             return null;
         }
         return res;

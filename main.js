@@ -70,7 +70,7 @@ client.on("message", async message => {
         return;
     }
     let prev = "";
-    let pattern = /```(?<str>[\s\S]+)```|"(?<str2>([^\\"]|\\.)*)"|(?<str3>[^ |;]+)|(?<terminator>;)|(?<pipe>\|)/g;
+    let pattern = /```([^`\n]+\n)?(?<str>[\s\S]+)```|"(?<str2>([^\\"]|\\.)*)"|(?<str3>[^ |;]+)|(?<terminator>;)|(?<pipe>\|)/g;
     let matched = "";
     let commands = [[]];
     let executed = false;
