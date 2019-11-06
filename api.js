@@ -1,9 +1,6 @@
-const express = require("express"
-);
-const ConnectionTimeManager = require("./dbman/connectiontime.js"
-);
-const ConnectionDataManager = require("./dbman/connectiondata.js"
-);
+const express = require("express");
+const ConnectionTimeManager = require("./dbman/connectiontime.js");
+const ConnectionDataManager = require("./dbman/connectiondata.js");
 
 module.exports = class Api {
     static async init (client) {
