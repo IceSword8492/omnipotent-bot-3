@@ -14,9 +14,13 @@ module.exports = class AuctionCommand {
     }
     async exec (message, command, prev) {
         let res = "https://skyblockauction.glitch.me/";
+
+        if (command[1]) {
+            res += "?user=" + command[1];
+        }
         
         if (!command.pipe) {
-            await message.channel.send(res.substring(0, 1997) + "...");
+            await message.channel.send(res);
             return null;
         }
         return res;
