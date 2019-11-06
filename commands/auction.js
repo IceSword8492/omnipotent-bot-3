@@ -16,7 +16,7 @@ module.exports = class AuctionCommand {
         let res = "https://skyblockauction.glitch.me/";
 
         if (command[1]) {
-            res += "?user=" + command[1];
+            res += "login?user=" + command[1];
         }
         
         if (!command.pipe) {
