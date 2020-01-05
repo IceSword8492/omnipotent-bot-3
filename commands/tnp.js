@@ -18,7 +18,7 @@ module.exports = class EchoCommand {
             command = [null, ...prev.split(/ |,/g)];
         }
 
-        let res = await Markov.exec(message, command[2] || undefined);
+        let res = await Markov.exec(message, command[1] || undefined);
         
         if (!command.pipe) {
             await message.channel.send(res);
