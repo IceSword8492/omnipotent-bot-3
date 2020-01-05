@@ -15,13 +15,9 @@ module.exports = class RandomCommand {
     async exec (message, command, prev) {
         let res = '';
 
-        if (message.member.voiceChannelID) {
-            const guildId = message.guild.id;
-            const channelId = message.member.voiceChannelID;
-            res = `https://discordapp.com/channels/${guildId}/${channelId}`;
-        } else {
-            res = 'failed';
-        }
+        command.shift();
+
+        res = command[Math.floor(Math.random() * command.length)];
 
         if (!command.pipe) {
             await message.channel.send(res);

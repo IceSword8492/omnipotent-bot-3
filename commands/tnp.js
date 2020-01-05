@@ -10,7 +10,7 @@ module.exports = class EchoCommand {
         this.command = "tnp";
         this.description = `tnp command.`;
         this.help = `usage: tnp`;
-        
+
         if (logflag) this.log.info(`${this.command} command loaded.`);
     }
     async exec (message, command, prev) {
@@ -19,7 +19,7 @@ module.exports = class EchoCommand {
         }
 
         let res = await Markov.exec(message, command[1] || undefined);
-        
+
         if (!command.pipe) {
             await message.channel.send(res);
             return null;
