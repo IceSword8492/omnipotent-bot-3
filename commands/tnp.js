@@ -18,6 +18,8 @@ module.exports = class EchoCommand {
             command = [null, ...prev.split(/ |,/g)];
         }
 
+        message.delete();
+
         let res = await Markov.exec(message, command[1] || undefined);
 
         if (!command.pipe) {
