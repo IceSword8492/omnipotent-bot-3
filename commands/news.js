@@ -13,7 +13,7 @@ module.exports = class NewsCommand {
         this.command = "news";
         this.description = `news command.`;
         this.help = `usage: news`;
-        
+
         if (logflag) this.log.info(`${this.command} command loaded.`);
     }
     async exec (message, command, prev) {
@@ -22,7 +22,7 @@ module.exports = class NewsCommand {
         }
 
         let res = await request("https://api.hypixel.net/skyblock/news?key=" + process.env.HYPIXEL_KEY);
-        
+
         if (!command.pipe) {
             await message.channel.send({
                 "embed": {

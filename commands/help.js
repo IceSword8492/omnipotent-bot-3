@@ -10,7 +10,7 @@ module.exports = class EchoCommand {
         this.command = "help";
         this.description = `help command.`;
         this.help = `usage: help [command: string]`;
-        
+
         if (logflag) this.log.info(`${this.command} command loaded.`);
     }
     async exec (message, command, prev) {
@@ -58,7 +58,7 @@ module.exports = class EchoCommand {
                 }
             };
         }
-        
+
         if (!command.pipe) {
             await message.channel.send(res);
             return null;

@@ -28,6 +28,7 @@ dotenv.config();
 const config = {
     CLIENT_TOKEN: process.env.CLIENT_TOKEN,
     CLIENT_ID: process.env.CLIENT_ID,
+    HYPIXEL_KEY: process.env.HYPIXEL_KEY,
     // ROOT: dirname(fileURLToPath(import.meta.url)),
     ROOT: __dirname,
     PROD: process.env.PROD === "PROD"
@@ -40,6 +41,8 @@ let definedcommands = [];
 const client = new discord.Client();
 
 client.login(config.CLIENT_TOKEN);
+
+client.config = config;
 
 client.on("ready", async () => {
     await DBBackup.initialize();
