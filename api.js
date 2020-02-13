@@ -1,3 +1,4 @@
+const fs = require('fs');
 const express = require("express");
 const ConnectionTimeManager = require("./dbman/connectiontime.js");
 const ConnectionDataManager = require("./dbman/connectiondata.js");
@@ -8,6 +9,10 @@ module.exports = class Api {
         let listener = app.listen(process.env.PORT || 8080, _ => {});
         app.get("/", async (req, res) => {
             res.status(200).send();
+        });
+        app.get("/api/v1/resources/:type/:filename", async (req, res) => {
+            const [type, filename] = [req.params.type, req.params.filename];
+            res.send(fs.readFileSync(`./resources/${type}/${filename}`));
         });
         app.get("/api/v1/connection", async (req, res) => {
             let records = await ConnectionTimeManager.getList("*", {userid: ""}).catch(_ => null);

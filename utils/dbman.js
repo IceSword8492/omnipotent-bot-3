@@ -28,14 +28,13 @@ module.exports = class DBMan {
      * @example {column_test: this.types.text}
      */
     static columns;
-    
+
     static async initialize (config) {
         this.config = config;
 
         let db = await this.sqlite.open(this.config.ROOT + "/database/main.db").catch(_ => {});
-        await db.run(`create table ${this.tablename} (${Object.entries(this.columns).map(column => `${column[0]} ${column[1]}`).join(", ")})`)
-            .then(_ => this.log.info(`table (${this.tablename}) was created.`))
-            .catch(_ => this.log.info(`table (${this.tablename}) already exists.`));
+        await db.run(`create table if not exists ${this.tablename} (${Object.entries(this.columns).map(column => `${column[0]} ${column[1]}`).join(", ")})`)
+            .catch(this.log.error);
     }
 
     static async _insert (data) {
@@ -47,7 +46,7 @@ module.exports = class DBMan {
         let db = await this.sqlite.open(this.config.ROOT + "/database/main.db").catch(_ => {});
         await db.run(`update ${this.tablename} set ${Object.entries(data).map(column => `${column[0]} = ${typeof column[1] === "string" ? `'${column[1]}'` : column[1]}`).join(", ")} where ${Object.entries(where).map(cond => `${cond[0]} ${cond[1]}`).join(" and ")}`).catch(_ => {});
     }
-    
+
     static async _delete (where) {
         let db = await this.sqlite.open(this.config.ROOT + "/database/main.db").catch(_ => {});
         await db.run(`delete from ${this.tablename} where ${Object.entries(where).map(cond => `${cond[0]} ${cond[1]}`).join(" and ")}`).catch(_ => {});
@@ -55,18 +54,18 @@ module.exports = class DBMan {
 
     static async exists (where) {
         let db = await this.sqlite.open(this.config.ROOT + "/database/main.db").catch(_ => {});
-        let res = await db.get(`select * from ${this.tablename} where ${Object.entries(where).map(cond => `${cond[0]} ${cond[1]}`).join(" and ")}`);
+        let res = await db.get(`select * from ${this.tablename} ${Object.entries(where).length ? 'where': ''} ${Object.entries(where).map(cond => `${cond[0]} ${cond[1]}`).join(" and ")}`);
         return !!res;
     }
-    
+
     static async getData (columns, where) {
         let db = await this.sqlite.open(this.config.ROOT + "/database/main.db").catch(_ => {});
-        return await db.get(`select ${columns.split(/[ \t\v\f]/g).join(", ")} from ${this.tablename} where ${Object.entries(where).map(cond => `${cond[0]} ${cond[1]}`).join(" and ")}`);
+        return await db.get(`select ${columns.split(/[ \t\v\f]/g).join(", ")} from ${this.tablename} ${Object.entries(where).length ? 'where': ''} ${Object.entries(where).map(cond => `${cond[0]} ${cond[1]}`).join(" and ")}`);
     }
 
     static async getList (columns, where = [], count = -1, offset = 0, order = "") {
         let db = await this.sqlite.open(this.config.ROOT + "/database/main.db").catch(_ => {});
-        return await db.all(`select ${columns.split(/[ \t\v\f]/g).join(", ")} from ${this.tablename} where ${Object.entries(where).map(cond => `${cond[0]} ${cond[1]}`).join(" and ")}`);
+        return await db.all(`select ${columns.split(/[ \t\v\f]/g).join(", ")} from ${this.tablename} ${Object.entries(where).length ? 'where': ''} ${Object.entries(where).map(cond => `${cond[0]} ${cond[1]}`).join(" and ")}`);
     }
 
     static async count (where) {

@@ -5,9 +5,8 @@ module.exports = class IdDBMan extends DBMan {
         this.config = config;
 
         let db = await this.sqlite.open(this.config.ROOT + "/database/main.db").catch(this.log.error);
-        await db.run(`create table ${this.tablename} (id integer unique not null primary key autoincrement, ${Object.entries(this.columns).map(column => `${column[0]} ${column[1]}`).join(", ")})`)
-            .then(_ => this.log.info(`table (${this.tablename}) was created.`))
-            .catch(_ => this.log.info(`table (${this.tablename}) already exists.`));
+        await db.run(`create table if not exists ${this.tablename} (id integer primary key autoincrement, ${Object.entries(this.columns).map(column => `${column[0]} ${column[1]}`).join(", ")})`)
+            .catch(this.log.error);
     }
 
     static async _insert (data) {

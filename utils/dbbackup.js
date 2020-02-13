@@ -1,7 +1,5 @@
-const fs = require("fs"
-);
-const request = require("request-promise"
-);
+const fs = require("fs");
+const request = require("request-promise");
 
 module.exports = class DBBackup {
     static async initialize () {

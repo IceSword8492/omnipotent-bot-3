@@ -9,9 +9,8 @@ module.exports = class ConnectionDataManager extends DBMan {
         this.config = config;
 
         let db = await this.sqlite.open(this.config.ROOT + "/database/main.db").catch(this.log.error);
-        await db.run(`create table ${this.tablename} (${Object.entries(this.columns).map((column, index) => index ? `${column[0]} ${column[1]}` : `${column[0]} ${column[1]} unique`).join(", ")})`)
-            .then(_ => this.log.info(`table (${this.tablename}) was created.`))
-            .catch(_ => this.log.info(`table (${this.tablename}) already exists.`));
+        await db.run(`create table if not exists ${this.tablename} (${Object.entries(this.columns).map((column, index) => index ? `${column[0]} ${column[1]}` : `${column[0]} ${column[1]} unique`).join(", ")})`)
+            .catch(this.log.error);
     }
 
     static async create (id, nickname, backgroundColor, borderColor) {

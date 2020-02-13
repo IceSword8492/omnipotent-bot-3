@@ -7,9 +7,8 @@ module.exports = class MarkovManager extends DBMan {
         this.config = config;
 
         let db = await this.sqlite.open(this.config.ROOT + "/database/main.db").catch(this.log.error);
-        await db.run(`create table ${this.tablename} (channelId text unique not null, ${Object.entries(this.columns).filter((c, i) => !!i).map(column => `${column[0]} ${column[1]}`).join(", ")})`)
-            .then(_ => this.log.info(`table (${this.tablename}) was created.`))
-            .catch(_ => this.log.info(`table (${this.tablename}) already exists.`));
+        await db.run(`create table if not exists ${this.tablename} (channelId text unique not null, ${Object.entries(this.columns).filter((c, i) => !!i).map(column => `${column[0]} ${column[1]}`).join(", ")})`)
+            .catch(this.log.error);
     }
 
     static columns = {channelId: this.types.text, messageCount: this.types.integer, messageLimit: this.types.integer, permission: this.types.integer};
