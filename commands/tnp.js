@@ -1,7 +1,7 @@
 const Log = require("../utils/log.js");
 const Markov = require("../markov/markov.js");
 
-module.exports = class EchoCommand {
+module.exports = class TnpCommand {
     constructor (config, client, logflag) {
         this.config = config;
         this.client = client;
