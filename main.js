@@ -78,7 +78,7 @@ client.on("ready", async () => {
     const article = note('.article-body').text();
     const message = new discord.RichEmbed()
         .setTitle(latestVersion)
-        .setImage('https://icesword8492-omnipotent-bot-3.glitch.me/api/v1/resources/image/mojang.png')
+        .setThumbnail('https://icesword8492-omnipotent-bot-3.glitch.me/api/v1/resources/image/mojang.png')
         .setTimestamp(new Date())
         .setAuthor('Mojang')
         .setURL(url)
