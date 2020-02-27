@@ -73,7 +73,7 @@ client.on("ready", async () => {
     setInterval(async () => {
         const page = await request('https://feedback.minecraft.net/hc/en-us/sections/360002267532-Snapshot-Information-and-Changelogs', {transform: body => cheerio.load(body)}).catch(console.error);
         const latestVersion = page('.article-list-item').eq(0).children().eq(0).text();
-        const url = page('.article-list-item').eq(0);
+        const url = `https://feedback.minecraft.net${page('.article-list-item').eq(0).children().eq(0).attr('href')}`;
         if (!await ChangelogManager.exists({title: `= '${latestVersion}'`})) {
             await ChangelogManager.create(latestVersion);
             const note = await request(url, {transform: body => cheerio.load(body)}).catch(console.error);
@@ -86,7 +86,7 @@ client.on("ready", async () => {
                 .setURL(url)
                 .setColor(0xdb1f29)
                 .addField(':notepad_spiral: Note', `${article.substring(0, 996)}...`);
-            client.channels.get('324001647657222146').send(message); // JEF(他クラン招待可)/雑談
+            client.channels.get('309556801400209408').send(message); // JEF(他クラン招待可)/雑談
         }
     }, 10 * 60 * 1000);
 });
