@@ -17,7 +17,7 @@
     "request": "^2.87.0",
     "request-promise": "^4.2.4",
     "sqlite-async": "^1.0.12",
-    "sqlite3": "^4.1.0"
+    "sqlite3": "^4.2.0"
   },
   "engines": {
     "node": "^12.8.1"
